@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnListView;
     private Button btnGridView;
+    private Button btnRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnListView = findViewById(R.id.btnListView);
         btnGridView = findViewById(R.id.btnGridView);
+        btnRecyclerView = findViewById(R.id.btnRecyclerView);
 
         btnListView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GridViewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RecyclerViewActivity.class);
                 startActivity(intent);
             }
         });
