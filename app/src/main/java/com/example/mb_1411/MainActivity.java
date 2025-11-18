@@ -98,11 +98,16 @@ public class MainActivity extends AppCompatActivity {
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String name = editText1.getText().toString().trim();
                 if (vitri >= 0 && vitri < arrayList.size()) {
-                    arrayList.set(vitri, editText1.getText().toString());
-                    adapter.notifyDataSetChanged();
-                    vitri = -1;
-                    editText1.setText("");
+                    if (!name.isEmpty()) {
+                        arrayList.set(vitri, name);
+                        adapter.notifyDataSetChanged();
+                        vitri = -1;
+                        editText1.setText("");
+                    } else {
+                        Toast.makeText(MainActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, "Please select an item to update", Toast.LENGTH_SHORT).show();
                 }
