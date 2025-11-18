@@ -34,6 +34,13 @@
         android:id="@+id/btnMultiViewType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:text="Multiple ViewType RecyclerView" />
+
+    <Button
+        android:id="@+id/btnAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Animation Example" />
 
 </LinearLayout>
