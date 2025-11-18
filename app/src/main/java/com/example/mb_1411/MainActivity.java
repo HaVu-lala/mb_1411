@@ -109,7 +109,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //khai báo
+        ListView listView;
+        ArrayList<MonHoc> arrayList;
+        MonhocAdapter adapter;
+        //ánh xạ
+        AnhXa();
+        //Tạo Adapter
+        adapter = new MonhocAdapter(MainActivity.this,
+                R.layout.row_monhoc,
+                arrayList
+        );
+        //truyền dữ liệu từ adapter ra listview
+        listView.setAdapter(adapter);
+
         // If you intended to delete an item, add a delete button and call:
         // if (vitri >= 0) { arrayList.remove(vitri); adapter.notifyDataSetChanged(); vitri = -1; }
     }
+
+    private void AnhXa() {
+        listView = (ListView) findViewById(R.id.listview1);
+        editText1 = (EditText) findViewById(R.id.editText1);
+        btnNhap = (Button) findViewById(R.id.btnNhap);
+        btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
+        //Thêm dữ liệu vào List
+        arrayList = new ArrayList<>();
+        arrayList.add(new MonHoc("Java","Java 1",R.drawable.java1));
+        arrayList.add(new MonHoc("C#","C# 1",R.drawable.c));
+        arrayList.add(new MonHoc("PHP","PHP 1",R.drawable.php));
+        arrayList.add(new MonHoc("Kotlin","Kotlin 1",R.drawable.kotlin));
+                arrayList.add(new MonHoc("Dart","Dart 1",R.drawable.dart));
+    }
 }
+
+
