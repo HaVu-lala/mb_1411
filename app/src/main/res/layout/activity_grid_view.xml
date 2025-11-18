@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".GridViewActivity">
 
     <EditText
         android:id="@+id/editText1"
@@ -21,26 +21,21 @@
 
         <Button
             android:id="@+id/btnNhap"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nhập" />
 
         <Button
             android:id="@+id/btnCapNhat"
-            android:layout_width="138dp"
-            android:layout_height="wrap_content"
-            android:text="Cập nhật" />
-
-        <Button
-            android:id="@+id/btnGridView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go to GridView" />
+            android:text="Cập nhật" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listview1"
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:numColumns="2" />
 
 </LinearLayout>

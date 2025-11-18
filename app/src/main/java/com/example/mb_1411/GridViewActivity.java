@@ -1,67 +1,54 @@
 package com.example.mb_1411;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class GridViewActivity extends AppCompatActivity {
 
-    private ListView listView;
+    private GridView gridView;
     private ArrayList<MonHoc> arrayList;
     private MonHocAdapter adapter;
     private EditText editText1;
     private Button btnNhap;
     private Button btnCapNhat;
-    private Button btnGridView;
     private int vitri = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setContentView(R.layout.activity_grid_view);
 
         // Ánh xạ view và khởi tạo dữ liệu
         AnhXa();
 
         // Tạo Adapter
-        adapter = new MonHocAdapter(MainActivity.this, R.layout.row_monhoc, arrayList);
-        //truyền dữ liệu từ adapter ra listview
-        listView.setAdapter(adapter);
+        adapter = new MonHocAdapter(this, R.layout.row_monhoc, arrayList);
+        gridView.setAdapter(adapter);
 
         // Single item click: show position and load into editText for update
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(GridViewActivity.this, "" + position, Toast.LENGTH_SHORT).show();
                 editText1.setText(arrayList.get(position).getName());
                 vitri = position;
             }
         });
 
         // Long click: delete item
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(MainActivity.this, "Đã xóa " + arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(GridViewActivity.this, "Đã xóa " + arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
                 arrayList.remove(position);
                 adapter.notifyDataSetChanged();
                 return true;
@@ -79,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     editText1.setText("");
                 } else {
-                    Toast.makeText(MainActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GridViewActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -97,29 +84,20 @@ public class MainActivity extends AppCompatActivity {
                         vitri = -1;
                         editText1.setText("");
                     } else {
-                        Toast.makeText(MainActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GridViewActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "Please select an item to update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GridViewActivity.this, "Please select an item to update", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        btnGridView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GridViewActivity.class);
-                startActivity(intent);
             }
         });
     }
 
     private void AnhXa() {
-        listView = (ListView) findViewById(R.id.listview1);
+        gridView = (GridView) findViewById(R.id.gridview);
         editText1 = (EditText) findViewById(R.id.editText1);
         btnNhap = (Button) findViewById(R.id.btnNhap);
         btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
-        btnGridView = (Button) findViewById(R.id.btnGridView);
         //Thêm dữ liệu vào List
         arrayList = new ArrayList<>();
         arrayList.add(new MonHoc("Java","Java 1",R.drawable.java1));
