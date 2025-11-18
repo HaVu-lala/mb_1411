@@ -5,6 +5,12 @@ public class MonHoc {
     private String desc;
     private int pic;
 
+    public MonHoc(String name, String desc, int pic) {
+        this.name = name;
+        this.desc = desc;
+        this.pic = pic;
+    }
+
     public String getName() {
         return name;
     }

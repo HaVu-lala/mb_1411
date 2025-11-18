@@ -3,7 +3,6 @@ package com.example.mb_1411;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,8 +19,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayList<String> arrayList;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<MonHoc> arrayList;
+    private MonHocAdapter adapter;
     private EditText editText1;
     private Button btnNhap;
     private Button btnCapNhat;
@@ -38,26 +37,12 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Find views
-        listView = findViewById(R.id.listview1);
-        editText1 = findViewById(R.id.editText1);
-        btnNhap = findViewById(R.id.btnNhap);
-        btnCapNhat = findViewById(R.id.btnCapNhat);
+        // Ánh xạ view và khởi tạo dữ liệu
+        AnhXa();
 
-        // Prepare data
-        arrayList = new ArrayList<>();
-        arrayList.add("Java");
-        arrayList.add("C#");
-        arrayList.add("PHP");
-        arrayList.add("Kotlin");
-        arrayList.add("Dart");
-
-        // Adapter
-        adapter = new ArrayAdapter<>(
-                MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                arrayList
-        );
+        // Tạo Adapter
+        adapter = new MonHocAdapter(MainActivity.this, R.layout.row_monhoc, arrayList);
+        //truyền dữ liệu từ adapter ra listview
         listView.setAdapter(adapter);
 
         // Single item click: show position and load into editText for update
@@ -65,16 +50,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-                editText1.setText(arrayList.get(position));
+                editText1.setText(arrayList.get(position).getName());
                 vitri = position;
             }
         });
 
-        // Long click: show message (keeps item)
+        // Long click: delete item
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(MainActivity.this, "Bạn đang nhấn giữ " + position + " - " + arrayList.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Đã xóa " + arrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                arrayList.remove(position);
+                adapter.notifyDataSetChanged();
                 return true;
             }
         });
@@ -85,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = editText1.getText().toString().trim();
                 if (!name.isEmpty()) {
-                    arrayList.add(name);
+                    // Thêm một môn học mới với ảnh mặc định
+                    arrayList.add(new MonHoc(name, "Mô tả cho " + name, R.drawable.ic_launcher_foreground));
                     adapter.notifyDataSetChanged();
                     editText1.setText("");
                 } else {
@@ -99,32 +87,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (vitri >= 0 && vitri < arrayList.size()) {
-                    arrayList.set(vitri, editText1.getText().toString());
-                    adapter.notifyDataSetChanged();
-                    vitri = -1;
-                    editText1.setText("");
+                    String newName = editText1.getText().toString().trim();
+                    if (!newName.isEmpty()) {
+                        MonHoc monHoc = arrayList.get(vitri);
+                        monHoc.setName(newName);
+                        adapter.notifyDataSetChanged();
+                        vitri = -1;
+                        editText1.setText("");
+                    } else {
+                        Toast.makeText(MainActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, "Please select an item to update", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        //khai báo
-        ListView listView;
-        ArrayList<MonHoc> arrayList;
-        MonhocAdapter adapter;
-        //ánh xạ
-        AnhXa();
-        //Tạo Adapter
-        adapter = new MonhocAdapter(MainActivity.this,
-                R.layout.row_monhoc,
-                arrayList
-        );
-        //truyền dữ liệu từ adapter ra listview
-        listView.setAdapter(adapter);
-
-        // If you intended to delete an item, add a delete button and call:
-        // if (vitri >= 0) { arrayList.remove(vitri); adapter.notifyDataSetChanged(); vitri = -1; }
     }
 
     private void AnhXa() {
@@ -138,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add(new MonHoc("C#","C# 1",R.drawable.c));
         arrayList.add(new MonHoc("PHP","PHP 1",R.drawable.php));
         arrayList.add(new MonHoc("Kotlin","Kotlin 1",R.drawable.kotlin));
-                arrayList.add(new MonHoc("Dart","Dart 1",R.drawable.dart));
+        arrayList.add(new MonHoc("Dart","Dart 1",R.drawable.dart));
     }
 }
-
-
