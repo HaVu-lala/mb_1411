@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnListView;
     private Button btnGridView;
     private Button btnRecyclerView;
+    private Button btnMultiViewType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         btnListView = findViewById(R.id.btnListView);
         btnGridView = findViewById(R.id.btnGridView);
         btnRecyclerView = findViewById(R.id.btnRecyclerView);
+        btnMultiViewType = findViewById(R.id.btnMultiViewType);
 
         btnListView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RecyclerViewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnMultiViewType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MultipleViewTypeActivity.class);
                 startActivity(intent);
             }
         });
